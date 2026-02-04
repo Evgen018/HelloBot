@@ -9,9 +9,18 @@ if (!token) {
 
 const bot = new TelegramBot(token, { polling: true });
 
+const isRussian = (text) => /[\u0400-\u04FF]/.test(text);
+
+const russianGreetings = ['Привет, я бот!', 'Здравствуйте, я бот!'];
+const englishGreeting = "Hello, I'm a bot!";
+
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, 'Привет, я бот!');
+  const text = msg.text || '';
+  const reply = isRussian(text)
+    ? russianGreetings[Math.floor(Math.random() * russianGreetings.length)]
+    : englishGreeting;
+  bot.sendMessage(chatId, reply);
 });
 
 console.log('Бот запущен. Ожидаю сообщения...');
