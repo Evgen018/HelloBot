@@ -1,0 +1,2 @@
+# HelloBot
+for Cursor
